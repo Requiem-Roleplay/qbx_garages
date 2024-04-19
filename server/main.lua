@@ -53,7 +53,7 @@ local function checkOwnership(source, plate, type, house, gang)
          return result[1] or false
     elseif type == 'house' then -- House garages only for player cars that have keys of the house
         local result = MySQL.query.await('SELECT * FROM player_vehicles WHERE plate = ?', {plate})
-        return result[1] and exports['qb-houses']:hasKey(result[1].license, result[1].citizenid, house)
+        return result[1] and exports['ps-housing']:IsOwner(source, house)
     elseif type == 'gang' then -- Gang garages only for gang members cars (for sharing)
         local result = MySQL.query.await('SELECT * FROM player_vehicles WHERE plate = ?', {plate})
         if not result[1] then return false end
